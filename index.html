@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>زيكوم — مطوّر ويب</title>
+
+  <!-- خط عربي -->
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <meta name="color-scheme" content="dark light" />
+  <link rel="stylesheet" href="video.css" />
+  <style>
+    :root{
+      --bg:#0a1420;
+      --bg-alt:#0d1b2a;
+      --card:#0f2235;
+      --text:#e6e9ef;
+      --muted:#a7b0c0;
+      --primary:#0b5ed7;
+      --accent:#d4af37;
+      --border:rgba(255,255,255,.08);
+      --shadow:0 10px 30px rgba(0,0,0,.3);
+      --radius:14px;
+      --container:1120px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{padding:0;margin:0}
+    body{
+      font-family: 'Tajawal', sans-serif;
+      color:var(--text);
+      background:linear-gradient(180deg,#07101a, #0a1420 40%, #0d1b2a);
+      line-height:1.6;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+    }
+    img{max-width:100%;display:block}
+
+    /* Layout */
+    .container{width:100%;max-width:var(--container);margin-inline:auto;padding:0 20px}
+    .section{padding:80px 0}
+    .section--alt{background:linear-gradient(180deg,var(--bg-alt), #0e1f33)}
+    .section__title{
+      font-size:clamp(24px,3.5vw,36px);
+      margin:0 0 24px;
+      letter-spacing:.3px;
+    }
+
+    /* Header */
+    .header{
+      position:sticky;top:0;z-index:50;
+      background:rgba(7,16,26,.85);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--border);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .header__wrap{display:flex;align-items:center;justify-content:space-between;height:70px}
+    
+    /* شعار بارز ومميز */
+    .logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      transition: transform 0.3s ease;
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
+    }
+
+    .logo-img {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      border: 2px solid #00bcd4;
+      padding: 4px;
+      background: linear-gradient(135deg, #00bcd4, #7c4dff);
+      box-shadow: 0 4px 12px rgba(0, 188, 212, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .logo:hover .logo-img {
+      transform: rotate(-5deg) scale(1.1);
+      box-shadow: 0 6px 16px rgba(0, 188, 212, 0.5);
+    }
+
+    .logo-text {
+      font-family: 'Tajawal', sans-serif;
+      font-weight: 800;
+      font-size: 1.4rem;
+      color: #fff;
+      margin-right: 12px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      background: linear-gradient(135deg, #00bcd4, #7c4dff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav__toggle{
+      display:none; background:transparent; color:var(--text); border:1px solid var(--border);
+      padding:8px 12px; border-radius:10px
+    }
+    .nav__menu{display:flex;gap:18px;list-style:none;padding:0;margin:0}
+    .nav__menu a{
+      color:var(--muted); text-decoration:none; padding:10px 12px; border-radius:10px;
+      transition:.2s ease
+    }
+    .nav__menu a:hover{color:var(--text); background:rgba(255,255,255,.05)}
+
+    /* Hero */
+    .hero{position:relative;padding:120px 0 80px;overflow:hidden}
+    .hero__grid{
+      display:grid; grid-template-columns:1.2fr .8fr; gap:36px; align-items:center;
+    }
+    .hero__text h1{margin:0 0 10px; font-size:clamp(26px,4.5vw,46px)}
+    .hero__text h1 span{color:var(--accent)}
+    .hero__text p{color:var(--muted); margin:0 0 20px; max-width:52ch}
+    .hero__cta{display:flex;gap:12px;margin-bottom:16px; flex-wrap: wrap;}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:12px 18px; border-radius:12px; text-decoration:none; cursor:pointer;
+      border:1px solid var(--border); color:var(--text); transition:.2s ease;
+      font-weight: 500;
+    }
+    .btn--primary{background:linear-gradient(135deg,#0b5ed7,#1f7bf2); border-color:transparent}
+    .btn--primary:hover{filter:brightness(1.1); transform: translateY(-2px);}
+    .btn--ghost:hover{background:rgba(255,255,255,.06); transform: translateY(-2px);}
+    .btn--cv {
+      background: linear-gradient(135deg, #d4af37, #ffd66b);
+      color: #0a1420;
+      border-color: transparent;
+      font-weight: 700;
+    }
+    .btn--cv:hover {
+      filter: brightness(1.1);
+      transform: translateY(-2px);
+    }
+    .badge{
+      display:inline-block; margin:6px 6px 0 0; padding:6px 10px; font-size:13px;
+      border-radius:999px; background:rgba(212,175,55,.15); color:#ffd66b; border:1px solid rgba(212,175,55,.35)
+    }
+    .hero__image{min-height:320px; position: relative;}
+    .hero__shape{
+      position:absolute; inset:auto -20% -30% -20%; height:340px;
+      background:radial-gradient(60% 80% at 50% 0, rgba(13,97,198,.25), transparent 60%);
+      pointer-events:none;
+    }
+
+    /* صورة شخصية في الهيرو */
+    .profile-image {
+      width: 100%;
+      height: 100%;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      position: relative;
+    }
+    
+    .profile-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    
+    .profile-image:hover img {
+      transform: scale(1.03);
+    }
+    
+    .profile-image::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(10, 20, 30, 0.7), transparent 60%);
+      pointer-events: none;
+    }
+
+    /* Placeholders */
+    .ph-img{
+      width:100%; aspect-ratio:16/10; border-radius:var(--radius);
+      background:
+        radial-gradient(120% 120% at 0% 0%, rgba(212,175,55,.15), transparent 40%),
+        linear-gradient(135deg, #0f2741, #0a1727);
+      border:1px solid var(--border);
+      box-shadow:var(--shadow);
+    }
+    .ph-img--hero{aspect-ratio:4/5}
+    .ph-img--card{aspect-ratio:4/3}
+    .ph-img--map{aspect-ratio:4/3; opacity:.8}
+
+    /* About */
+    .grid-2{display:grid; grid-template-columns:1fr 1fr; gap:28px}
+    .about__media{position:relative}
+    .about__stats{
+      display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:14px
+    }
+    .stat{
+      background:rgba(255,255,255,.04); border:1px solid var(--border);
+      border-radius:12px; padding:12px; text-align:center
+    }
+    .stat span{font-size:22px; font-weight:800; color:#ffd66b}
+    .stat small{display:block; color:var(--muted)}
+
+    /* Skills */
+    .skills{
+      display:grid; grid-template-columns:repeat(5,1fr); gap:16px
+    }
+    .skill{
+      background:var(--card); border:1px solid var(--border); border-radius:16px; padding:16px;
+      transition:transform .2s ease, box-shadow .2s ease
+    }
+    .skill:hover{transform:translateY(-4px); box-shadow:0 12px 26px rgba(0,0,0,.35)}
+    .skill__head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+    .skill__logo{
+      width:36px; height:36px; display:inline-grid; place-items:center; border-radius:10px;
+      background:rgba(11,94,215,.15); color:#76b3ff; font-weight:800
+    }
+    .skill__name{font-weight:700}
+    .skill__desc{color:var(--muted); margin:0 0 10px}
+    .progress{height:8px; background:rgba(255,255,255,.08); border-radius:999px; overflow:hidden}
+    .progress span{display:block; height:100%; background:linear-gradient(90deg,#ffd66b,#d4af37); border-radius:999px}
+
+    /* Design Skills */
+    .design-skills {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 40px;
+    }
+    
+    .design-skill {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      transition: transform .2s ease, box-shadow .2s ease;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .design-skill:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 26px rgba(0,0,0,.35);
+    }
+    
+    .design-skill__logo {
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background: rgba(255, 105, 180, 0.15);
+      color: #ff69b4;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+    
+    .design-skill:nth-child(2) .design-skill__logo {
+      background: rgba(255, 165, 0, 0.15);
+      color: #ffa500;
+    }
+    
+    .design-skill__info {
+      flex: 1;
+    }
+    
+    .design-skill__name {
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    
+    .design-skill__desc {
+      color: var(--muted);
+      font-size: 14px;
+      margin: 0;
+    }
+
+    /* Cards */
+    .cards{
+      display:grid; grid-template-columns:repeat(3,1fr); gap:18px
+    }
+    .card{
+      background:var(--card); border:1px solid var(--border); border-radius:16px; overflow:hidden;
+      transition:transform .25s ease, box-shadow .25s ease
+    }
+    .card:hover{transform:translateY(-6px); box-shadow:0 14px 34px rgba(0,0,0,.35)}
+    .card__media{overflow:hidden; height: 200px;}
+    .card__media img{width:100%; height:100%; object-fit:cover; transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+    .card:hover .card__media img{transform:scale(1.06)}
+    .card__body{padding:14px}
+    .card__body h3{margin:0 0 6px}
+    .card__body p{margin:0;color:var(--muted)}
+
+    /* Gallery */
+    .gallery{
+      display:grid; grid-template-columns:repeat(6,1fr); gap:10px
+    }
+    .gallery__item{
+      border-radius:14px; overflow:hidden; border:1px solid var(--border); background:var(--card)
+    }
+    .gallery__item img{width:100%; height:100%; object-fit:cover; aspect-ratio:1/1; transition:transform .4s ease, filter .4s}
+    .gallery__item:hover img{transform:scale(1.05); filter:saturate(1.1)}
+    
+    /* Design Gallery */
+    .design-gallery {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      margin-top: 30px;
+    }
+    
+    .design-gallery__item {
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--card);
+      aspect-ratio: 1/1;
+      cursor: pointer;
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+    
+    .design-gallery__item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 26px rgba(0,0,0,.4);
+    }
+    
+    .design-gallery__item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .4s ease, filter .4s;
+    }
+    
+    .design-gallery__item:hover img {
+      transform: scale(1.08);
+      filter: brightness(1.1);
+    }
+    
+    .lightbox{
+      position:fixed; inset:0; background:rgba(0,0,0,.8); display:none; align-items:center; justify-content:center; z-index:100
+    }
+    .lightbox.open{display:flex}
+    .lightbox__image{max-width:min(92vw,1200px); max-height:90vh; border-radius:12px; border:1px solid var(--border)}
+    .lightbox__close{
+      position:fixed; top:24px; left:24px; font-size:28px; color:#fff; background:transparent; border:none; cursor:pointer
+    }
+
+    /* Contact */
+    .contact{align-items:start}
+    .form{
+      background:var(--card); border:1px solid var(--border); border-radius:16px; padding:16px
+    }
+    .form__row{display:grid; gap:6px; margin-bottom:12px}
+    label{color:#d7deea}
+    input, textarea{
+      background:#091320; color:var(--text);
+      border:1px solid var(--border); border-radius:12px; padding:12px 12px;
+      outline:none; transition:border-color .2s ease, box-shadow .2s ease
+    }
+    input:focus, textarea:focus{border-color:#2f6feb; box-shadow:0 0 0 3px rgba(47,111,235,.2)}
+    .form__note{color:#9fe19f; min-height:20px}
+    .contact__info .info{
+      margin-bottom:12px; padding:16px; border-radius:16px; border:1px solid var(--border); background:rgba(255,255,255,.03)
+    }
+    .socials{display:flex; gap:12px; margin-top:8px}
+    .socials a{
+      color:#9fb5ff; text-decoration:none; padding:8px 10px; border:1px solid var(--border); border-radius:10px;
+      transition: all 0.2s ease;
+    }
+    .socials a:hover{background:rgba(255,255,255,.06); transform: translateY(-2px);}
+
+    /* Footer */
+    .footer{border-top:1px solid var(--border); padding:18px 0; margin-top:40px; background:rgba(7,16,26,.6); backdrop-filter:blur(8px)}
+    .footer__wrap{display:flex; align-items:center; justify-content:space-between}
+    .to-top{
+      width:36px; height:36px; display:grid; place-items:center;
+      border-radius:10px; border:1px solid var(--border); color:var(--text); text-decoration:none;
+      transition: all 0.2s ease;
+    }
+    .to-top:hover{background:rgba(255,255,255,.06); transform: translateY(-2px);}
+
+    /* Lists */
+    .list{padding:0; margin:0; list-style:none; display:grid; gap:8px}
+    .list--check li{position:relative; padding-right:22px}
+    .list--check li::before{
+      content:"✔"; position:absolute; right:0; color:#9fe19f; opacity:.8
+    }
+
+    /* Reveal on scroll */
+    .reveal-up{opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease}
+    .reveal-up.is-visible{opacity:1; transform:none}
+
+    /* Utilities */
+    .grid-2{display:grid; grid-template-columns:1fr 1fr; gap:22px}
+    .hero__badges{margin-top:8px}
+    .hero__image, .about__media{will-change:transform}
+
+    /* Responsive */
+    @media (max-width: 1024px){
+      .skills{grid-template-columns:repeat(3,1fr)}
+      .cards{grid-template-columns:repeat(2,1fr)}
+      .gallery{grid-template-columns:repeat(4,1fr)}
+      .design-gallery{grid-template-columns:repeat(4,1fr)}
+    }
+    @media (max-width: 768px){
+      .hero__grid{grid-template-columns:1fr}
+      .grid-2{grid-template-columns:1fr}
+      .skills{grid-template-columns:repeat(2,1fr)}
+      .design-skills{grid-template-columns:1fr}
+      .cards{grid-template-columns:1fr}
+      .gallery{grid-template-columns:repeat(3,1fr)}
+      .design-gallery{grid-template-columns:repeat(3,1fr)}
+      .nav__toggle{display:inline-flex}
+      .nav__menu{
+        position:absolute; top:70px; right:12px; left:12px; flex-direction:column; gap:0;
+        background:rgba(8,14,24,.98); border:1px solid var(--border); border-radius:14px; overflow:hidden;
+        max-height:0; transition:max-height .25s ease; visibility:hidden
+      }
+      .nav__menu.open{max-height:320px; visibility:visible}
+      .nav__menu a{padding:14px}
+    }
+    @media (max-width: 520px){
+      .skills{grid-template-columns:1fr}
+      .gallery{grid-template-columns:repeat(2,1fr)}
+      .design-gallery{grid-template-columns:repeat(2,1fr)}
+      .hero__cta {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container header__wrap">
+      <a class="logo" href="#home" aria-label="العودة للرئيسية | Zikom">
+        <img src="logo.png" alt="شعار زكريا منصور" class="logo-img">
+        <span class="logo-text">زكريا منصور</span>
+      </a>
+      <button class="nav__toggle" aria-label="فتح القائمة">
+        <i class="fas fa-bars"></i>
+      </button>
+      <nav>
+        <ul class="nav__menu">
+          <li><a href="#home">الرئيسية</a></li>
+          <li><a href="#about">عنّي</a></li>
+          <li><a href="#skills">المهارات</a></li>
+          <li><a href="#designs">التصاميم</a></li>
+          <li><a href="#projects">المشاريع</a></li>
+          <li><a href="#contact">تواصل معي</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section id="home" class="hero">
+    <div class="container hero__grid">
+      <div class="hero__text reveal-up">
+        <h1>مرحباً، أنا <span>زكريا منصور</span></h1>
+        <p>مطوّر واجهات وأنظمة متكاملة. أبني صفحات عربية دقيقة، متجاوبة، وبمصداقية عالية.</p>
+        <div class="hero__cta">
+          <a href="#contact" class="btn btn--ghost">تواصل الآن</a>
+          <a href="CV-Zakarya Mansoor_1.pdf" class="btn btn--cv" download="سيرة_زكريا_منصور.pdf">
+            <i class="fas fa-download"></i> تحميل السيرة الذاتية
+          </a>
+        </div>
+        <div class="hero__badges">
+          <span class="badge">PHP</span>
+          <span class="badge">ASP.NET Core</span>
+          <span class="badge">HTML5</span>
+          <span class="badge">JavaScript</span>
+          <span class="badge">C#</span>
+          <span class="badge">Photoshop</span>
+          <span class="badge">Illustrator</span>
+        </div>
+      </div>
+      <figure class="hero__image reveal-up" aria-label="صورة بصرية">
+        <div class="profile-image">
+          <img src="m.jpg" alt="صورة زكريا منصور - مطور ويب">
+        </div>
+      </figure>
+    </div>
+    <div class="hero__shape" aria-hidden="true"></div>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="section section--alt">
+    <div class="container grid-2">
+      <div class="reveal-up">
+        <h2 class="section__title">عنّي</h2>
+        <p>
+          أركز على دقة التفاصيل العربية، من الشبكات والخطوط إلى المحاذاة والهوية البصرية.
+          هدفي بناء صفحات تُشبه المؤسسات الرسمية في الموثوقية وتتفوق في الأداء وسهولة الاستخدام.
+        </p>
+        <ul class="list list--check">
+          <li><strong>جودة:</strong> تخطيط دقيق، RTL صحيح، وتباين لوني محسوب.</li>
+          <li><strong>أداء:</strong> صور محسّنة، كود نظيف، وحركات خفيفة بدون مكتبات ثقيلة.</li>
+          <li><strong>اعتمادية:</strong> بنية قابلة للتوسّع، وصولية، ومعايير ويب حديثة.</li>
+        </ul>
+      </div>
+      <figure class="about__media reveal-up">
+        <div class="ph-img ph-img--card"></div>
+        <div class="about__stats">
+          <div class="stat"><span data-count="3">0</span><small>سنوات خبرة</small></div>
+          <div class="stat"><span data-count="120">0</span><small>مشروع مُنجز</small></div>
+          <div class="stat"><span data-count="98">0</span><small>نقطة دقة/100</small></div>
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills" class="section">
+    <div class="container">
+      <h2 class="section__title reveal-up">المهارات التقنية</h2>
+
+      <div class="skills reveal-up">
+        <div class="skill">
+          <div class="skill__head">
+            <span class="skill__logo">PHP</span>
+            <span class="skill__name">PHP</span>
+          </div>
+          <p class="skill__desc">تطوير REST APIs، دمج قواعد البيانات، قوالب ديناميكية، وأمان الجلسات.</p>
+          <div class="progress" aria-label="إتقان PHP"><span style="width: 90%"></span></div>
+        </div>
+
+        <div class="skill">
+          <div class="skill__head">
+            <span class="skill__logo">.NET</span>
+            <span class="skill__name">ASP.NET Core</span>
+          </div>
+          <p class="skill__desc">خدمات MVC/Minimal APIs، مصادقة، وواجهات Razor متجاوبة.</p>
+          <div class="progress" aria-label="إتقان ASP.NET Core"><span style="width: 85%"></span></div>
+        </div>
+
+        <div class="skill">
+          <div class="skill__head">
+            <span class="skill__logo">H5</span>
+            <span class="skill__name">HTML5</span>
+          </div>
+          <p class="skill__desc">بُنى دلالية، وصولية، ونماذج حديثة مع خصائص ميتا متقدمة.</p>
+          <div class="progress" aria-label="إتقان HTML5"><span style="width: 95%"></span></div>
+        </div>
+
+        <div class="skill">
+          <div class="skill__head">
+            <span class="skill__logo">JS</span>
+            <span class="skill__name">JavaScript</span>
+          </div>
+          <p class="skill__desc">DOM حديث، IntersectionObserver، وحدات ES، وأنيميشن خفيفة.</p>
+          <div class="progress" aria-label="إتقان JavaScript"><span style="width: 88%"></span></div>
+        </div>
+
+        <div class="skill">
+          <div class="skill__head">
+            <span class="skill__logo">C#</span>
+            <span class="skill__name">C#</span>
+          </div>
+          <p class="skill__desc">OOP، LINQ، والخدمات الخلفية عالية الاعتمادية.</p>
+          <div class="progress" aria-label="إتقان C#"><span style="width: 82%"></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Design Skills -->
+  <section id="designs" class="section section--alt">
+    <div class="container">
+      <h2 class="section__title reveal-up">مهارات التصميم</h2>
+      <p class="reveal-up" style="text-align: center; max-width: 600px; margin: 0 auto 40px; color: var(--muted);">
+        أمتلك خبرة في تصميم الشعارات والمواد التسويقية والواجهات البصرية باستخدام أحدث أدوبي
+      </p>
+      
+      <div class="design-skills reveal-up">
+        <div class="design-skill">
+          <div class="design-skill__logo">
+            <i class="fab fa-adobe"></i>
+          </div>
+          <div class="design-skill__info">
+            <h3 class="design-skill__name">Adobe Photoshop</h3>
+            <p class="design-skill__desc">تصميم الشعارات، تعديل الصور، تصميم المواد التسويقية والبانرات الإعلانية</p>
+            <div class="progress" aria-label="إتقان Photoshop"><span style="width: 85%"></span></div>
+          </div>
+        </div>
+        
+        <div class="design-skill">
+          <div class="design-skill__logo">
+            <i class="fab fa-adobe"></i>
+          </div>
+          <div class="design-skill__info">
+            <h3 class="design-skill__name">Adobe Illustrator</h3>
+            <p class="design-skill__desc">تصميم الشعارات المتجهة، الأيقونات، الإنفوجرافيك، والمواد المطبوعة</p>
+            <div class="progress" aria-label="إتقان Illustrator"><span style="width: 80%"></span></div>
+          </div>
+        </div>
+      </div>
+      
+      <h3 class="section__title reveal-up" style="font-size: 28px; margin-top: 60px;">معرض التصاميم</h3>
+      
+      <div class="design-gallery reveal-up">
+        <div class="design-gallery__item">
+          <img src="images/design-1.png" alt="تصميم شعار شركة تقنية" data-src="design-1.png">
+        </div>
+        <div class="design-gallery__item">
+          <img src="images/design-2.png" alt="تصميم هوية بصرية لمؤسسة تعليمية" data-src="design-2.png">
+        </div>
+        <div class="design-gallery__item">
+          <img src="images/design-3.png" alt="تصميم غلاف كتاب" data-src="design-3.png">
+        </div>
+        <div class="design-gallery__item">
+          <img src="images/design-4.png" alt="تصميم بانر إعلاني" data-src="design-4.png">
+        </div>
+        <div class="design-gallery__item">
+          <img src="images/design-5.png" alt="تصميم مواد تسويقية" data-src="design-5.png">
+        </div>
+        <div class="design-gallery__item">
+          <img src="images/design-6.png" alt="تصميم شعار شخصي" data-src="design-6.png">
+        </div>
+        <div class="design-gallery__item">
+          <img src="images/design-7.png" alt="تصميم كارت عمل" data-src="design-7.jpg">
+        </div>
+        <div class="design-gallery__item">
+          <img src="images/design-8.png" alt="تصميم إنفوجرافيك" data-src="design-8.png">
+        </div>
+        <div class="design-gallery__item">
+          <img src="images/design-9.jpg" alt="تصميم واجهة تطبيق" data-src="design-9.jpg">
+        </div>
+        <div class="design-gallery__item">
+          <img src="images/design-10.png" alt="تصميم بروشور" data-src="design-10.png">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+  <!-- Lightbox للتصاميم -->
+  <div class="lightbox" id="designLightbox">
+    <button class="lightbox__close" id="closeLightbox" aria-label="إغلاق">
+      <i class="fas fa-times"></i>
+    </button>
+    <img class="lightbox__image" id="lightboxImage" src="" alt="تصميم معاينة">
+  </div>
+
+  <!-- Contact -->
+  <section id="contact" class="section section--alt">
+    <div class="container">
+      <h2 class="section__title reveal-up">تواصل معي</h2>
+      <div class="contact grid-2 reveal-up">
+        <form class="form" novalidate>
+          <div class="form__row">
+            <label for="name">الاسم</label>
+            <input id="name" name="name" type="text" placeholder="اسمك الكامل" required />
+          </div>
+          <div class="form__row">
+            <label for="email">البريد الإلكتروني</label>
+            <input id="email" name="email" type="email" placeholder="example@mail.com" required />
+          </div>
+          <div class="form__row">
+            <label for="message">الرسالة</label>
+            <textarea id="message" name="message" rows="5" placeholder="اكتب رسالتك…" required></textarea>
+          </div>
+          <button class="btn btn--primary" type="submit">إرسال</button>
+          <p class="form__note" role="status" aria-live="polite"></p>
+        </form>
+
+        <div class="contact__info">
+          <div class="info">
+            <h3>المعلومات</h3>
+            <p>متاح للتعاون في مشاريع الويب الأمامية والخلفية والتكامل المؤسسي.</p>
+            <ul class="list">
+              <li><strong>البريد:</strong> Eng.Zikom.Alselwi@hotmail.com</li>
+              <li><strong>الموقع:</strong> صنعاء، اليمن</li>
+              <li><strong>حالة العمل:</strong> متاح</li>
+            </ul>
+            <div class="socials">
+              <a href="https://github.com/Zakmansoor" aria-label="Github" target="_blank"><i class="fab fa-github"></i></a>
+              <a href="https://ye.linkedin.com/in/ziko-mansoor-alselwi-868738249" aria-label="LinkedIn" target="_blank"><i class="fab fa-linkedin"></i></a>
+              <a href="CV-Zakarya Mansoor_1.pdf" class="btn btn--cv" download="سيرة_زكريا_منصور.pdf" style="display: inline-flex; align-items: center; gap: 8px;">
+                <i class="fas fa-file-pdf"></i> السيرة الذاتية
+              </a>
+            </div>
+          </div>
+          <div class="ph-img ph-img--map" aria-hidden="true"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer " >
+    <div class="container footer__wrap">
+      <p>© <span id="year">2023</span> زكريا منصور — كل الحقوق محفوظة.</p>
+      <a class="to-top" href="#home" aria-label="للأعلى"><i class="fas fa-arrow-up"></i></a>
+    </div>
+  </footer>
+
+  <script>
+    // سنة الحقوق
+    document.getElementById('year').textContent = new Date().getFullYear();
+    
+    // تأثير الظهور عند التمرير
+    const revealElements = document.querySelectorAll('.reveal-up');
+    
+    const revealOnScroll = () => {
+      revealElements.forEach(element => {
+        const elementTop = element.getBoundingClientRect().top;
+        const elementVisible = 150;
+        
+        if (elementTop < window.innerHeight - elementVisible) {
+          element.classList.add('is-visible');
+        }
+      });
+    };
+    
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('load', revealOnScroll);
+    
+    // عدادات الإحصاءات
+    const counters = document.querySelectorAll('.stat span');
+    const speed = 200;
+    
+    const startCounters = () => {
+      counters.forEach(counter => {
+        const target = +counter.getAttribute('data-count');
+        const count = +counter.innerText;
+        const increment = Math.ceil(target / speed);
+        
+        if (count < target) {
+          counter.innerText = Math.min(count + increment, target);
+          setTimeout(() => startCounters(), 1);
+        }
+      });
+    };
+    
+    // بدء العد عند ظهور العنصر
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          startCounters();
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    
+    observer.observe(document.querySelector('.about__stats'));
+    
+    // تبديل القائمة على الأجهزة المحمولة
+    const toggleBtn = document.querySelector('.nav__toggle');
+    const navMenu = document.querySelector('.nav__menu');
+    
+    toggleBtn.addEventListener('click', () => {
+      navMenu.classList.toggle('open');
+      toggleBtn.setAttribute('aria-expanded', 
+        navMenu.classList.contains('open') ? 'true' : 'false');
+    });
+    
+    // Lightbox للتصاميم
+    const designGalleryItems = document.querySelectorAll('.design-gallery__item');
+    const designLightbox = document.getElementById('designLightbox');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const closeLightbox = document.getElementById('closeLightbox');
+    
+    designGalleryItems.forEach(item => {
+      item.addEventListener('click', function() {
+        const imgSrc = this.querySelector('img').getAttribute('data-src');
+        const imgAlt = this.querySelector('img').getAttribute('alt');
+        lightboxImage.src = imgSrc;
+        lightboxImage.alt = imgAlt;
+        designLightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+    
+    closeLightbox.addEventListener('click', function() {
+      designLightbox.classList.remove('open');
+      document.body.style.overflow = 'auto';
+    });
+    
+    designLightbox.addEventListener('click', function(e) {
+      if (e.target === designLightbox) {
+        designLightbox.classList.remove('open');
+        document.body.style.overflow = 'auto';
+      }
+    });
+  </script>
+  <script>
+    // وظائف للتعامل مع مقاطع الفيديو
+    document.addEventListener('DOMContentLoaded', function() {
+      const videoWrappers = document.querySelectorAll('.video-wrapper');
+      const videoModal = document.getElementById('videoModal');
+      const videoFrame = document.getElementById('videoFrame');
+      const closeModal = document.getElementById('closeModal');
+      
+      // فتح الفيديو في النافذة المنبثقة
+      videoWrappers.forEach(wrapper => {
+        wrapper.addEventListener('click', function() {
+          const videoId = this.getAttribute('data-video-id');
+          videoFrame.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+          videoModal.style.display = 'flex';
+          document.body.style.overflow = 'hidden'; // منع التمرير عند فتح الفيديو
+        });
+      });
+      
+      // إغلاق النافذة المنبثقة
+      closeModal.addEventListener('click', function() {
+        videoModal.style.display = 'none';
+        videoFrame.src = '';
+        document.body.style.overflow = 'auto'; // إعادة التمرير
+      });
+      
+      // إغلاق النافذة المنبثقة عند النقر خارجها
+      videoModal.addEventListener('click', function(e) {
+        if (e.target === videoModal) {
+          videoModal.style.display = 'none';
+          videoFrame.src = '';
+          document.body.style.overflow = 'auto';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
